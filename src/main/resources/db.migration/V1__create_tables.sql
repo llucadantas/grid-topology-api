@@ -67,7 +67,9 @@ CREATE TABLE trecho_mt (
         REFERENCES poste(id) ON DELETE RESTRICT,
     poste_destino_id BIGINT NOT NULL
         REFERENCES poste(id) ON DELETE RESTRICT,
+
     CHECK (poste_origem_id <> poste_destino_id),
+
 );
 
 CREATE TABLE trecho_bt (
@@ -79,7 +81,6 @@ CREATE TABLE trecho_bt (
         REFERENCES poste(id) ON DELETE RESTRICT,
     poste_destino_id BIGINT NOT NULL
         REFERENCES poste(id) ON DELETE RESTRICT,
-
     CHECK (poste_origem_id <> poste_destino_id),
 );
 
