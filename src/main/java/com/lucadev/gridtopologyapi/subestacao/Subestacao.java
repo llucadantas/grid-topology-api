@@ -1,5 +1,6 @@
-package com.lucadev.gridtopologyapi.model;
+package com.lucadev.gridtopologyapi.subestacao;
 
+import com.lucadev.gridtopologyapi.projeto.Projeto;
 import jakarta.persistence.*;
 import lombok.*;
 

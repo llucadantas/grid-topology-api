@@ -1,15 +1,17 @@
-package com.lucadev.gridtopologyapi.model;
+package com.lucadev.gridtopologyapi.trechobt;
 
+import com.lucadev.gridtopologyapi.poste.Poste;
+import com.lucadev.gridtopologyapi.transformador.Transformador;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
 @Table(
-    name = "trecho_mt",
+    name = "trecho_bt",
     indexes = {
-        @Index(name = "idx_trecho_mt_alimentador", columnList = "alimentador_id"),
-        @Index(name = "idx_trecho_mt_origem", columnList = "poste_origem_id"),
-        @Index(name = "idx_trecho_mt_destino", columnList = "poste_destino_id")
+        @Index(name = "idx_trecho_bt_transformador", columnList = "transformador_id"),
+        @Index(name = "idx_trecho_bt_origem", columnList = "poste_origem_id"),
+        @Index(name = "idx_trecho_bt_destino", columnList = "poste_destino_id")
     }
 )
 @Getter
@@ -17,7 +19,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class TrechoMT {
+public class TrechoBT {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,8 +29,8 @@ public class TrechoMT {
     private String codigo;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "alimentador_id", nullable = false)
-    private Alimentador alimentador;
+    @JoinColumn(name = "transformador_id", nullable = false)
+    private Transformador transformador;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "poste_origem_id", nullable = false)

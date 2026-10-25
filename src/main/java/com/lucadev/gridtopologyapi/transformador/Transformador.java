@@ -1,5 +1,6 @@
-package com.lucadev.gridtopologyapi.model;
+package com.lucadev.gridtopologyapi.transformador;
 
+import com.lucadev.gridtopologyapi.poste.Poste;
 import jakarta.persistence.*;
 import lombok.*;
 

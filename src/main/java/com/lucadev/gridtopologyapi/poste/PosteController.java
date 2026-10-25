@@ -1,8 +1,5 @@
-package com.lucadev.gridtopologyapi.controller;
+package com.lucadev.gridtopologyapi.poste;
 
-import com.lucadev.gridtopologyapi.dto.PosteDTO;
-import com.lucadev.gridtopologyapi.model.Poste;
-import com.lucadev.gridtopologyapi.service.PosteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

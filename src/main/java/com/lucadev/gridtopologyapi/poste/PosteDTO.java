@@ -1,6 +1,4 @@
-package com.lucadev.gridtopologyapi.dto;
-
-import com.lucadev.gridtopologyapi.model.Poste;
+package com.lucadev.gridtopologyapi.poste;
 
 import java.math.BigDecimal;
 

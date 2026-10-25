@@ -1,16 +1,16 @@
-package com.lucadev.gridtopologyapi.model;
+package com.lucadev.gridtopologyapi.projeto;
 
+import com.lucadev.gridtopologyapi.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
 @Entity
 @Table(
-    name = "poste",
+    name = "projeto",
     indexes = {
-        @Index(name = "idx_poste_projeto", columnList = "projeto_id")
+        @Index(name = "idx_projeto_usuario", columnList = "usuario_id")
     }
 )
 @Getter
@@ -18,32 +18,27 @@ import java.time.OffsetDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-@Builder
-public class Poste {
+public class Projeto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "altura_m", precision = 6, scale = 2)
-    private BigDecimal alturaM;
+    @Column(name = "nome", nullable = false, length = 100)
+    private String nome;
 
-    @Column(name = "material", length = 30)
-    private String material;
-
-    @Column(name = "status", nullable = false, length = 20)
-    private String status = "ATIVO";
+    @Column(name = "descricao", length = 255)
+    private String descricao;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "projeto_id", nullable = false)
-    private Projeto projeto;
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuario;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private OffsetDateTime createdAt;
 
     @Column(name = "updated_at", nullable = false)
     private OffsetDateTime updatedAt;
-
 
     @PrePersist
     protected void onCreate() {
@@ -53,9 +48,6 @@ public class Poste {
         }
         if (this.updatedAt == null) {
             this.updatedAt = now;
-        }
-        if (this.status == null) {
-            this.status = "ATIVO";
         }
     }
 

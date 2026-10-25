@@ -1,9 +1,6 @@
-package com.lucadev.gridtopologyapi.service;
+package com.lucadev.gridtopologyapi.poste;
 
-import com.lucadev.gridtopologyapi.dto.PosteDTO;
-import com.lucadev.gridtopologyapi.model.Poste;
-import com.lucadev.gridtopologyapi.repository.PosteRepository;
-import com.lucadev.gridtopologyapi.repository.ProjetoRepository;
+import com.lucadev.gridtopologyapi.projeto.ProjetoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,6 +1,5 @@
-package com.lucadev.gridtopologyapi.repository;
+package com.lucadev.gridtopologyapi.poste;
 
-import com.lucadev.gridtopologyapi.model.Poste;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

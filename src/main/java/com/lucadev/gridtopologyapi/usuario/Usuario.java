@@ -1,4 +1,4 @@
-package com.lucadev.gridtopologyapi.model;
+package com.lucadev.gridtopologyapi.usuario;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -6,32 +6,26 @@ import lombok.*;
 import java.time.OffsetDateTime;
 
 @Entity
-@Table(
-    name = "projeto",
-    indexes = {
-        @Index(name = "idx_projeto_usuario", columnList = "usuario_id")
-    }
-)
+@Table(name = "usuario")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Projeto {
+public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nome", nullable = false, length = 100)
+    @Column(name = "nome", nullable = false, length = 150)
     private String nome;
 
-    @Column(name = "descricao", length = 255)
-    private String descricao;
+    @Column(name = "email", nullable = false, unique = true, length = 150)
+    private String email;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "usuario_id", nullable = false)
-    private Usuario usuario;
+    @Column(name = "senha_hash", nullable = false, length = 255)
+    private String senhaHash;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private OffsetDateTime createdAt;
