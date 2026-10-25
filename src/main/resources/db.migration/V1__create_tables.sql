@@ -41,7 +41,7 @@ CREATE TABLE poste (
     projeto_id BIGINT NOT NULL
         REFERENCES projeto(id) ON DELETE CASCADE,
     created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE transformador (
@@ -68,7 +68,7 @@ CREATE TABLE trecho_mt (
     poste_destino_id BIGINT NOT NULL
         REFERENCES poste(id) ON DELETE RESTRICT,
 
-    CHECK (poste_origem_id <> poste_destino_id),
+    CHECK (poste_origem_id <> poste_destino_id)
 
 );
 
@@ -81,7 +81,7 @@ CREATE TABLE trecho_bt (
         REFERENCES poste(id) ON DELETE RESTRICT,
     poste_destino_id BIGINT NOT NULL
         REFERENCES poste(id) ON DELETE RESTRICT,
-    CHECK (poste_origem_id <> poste_destino_id),
+    CHECK (poste_origem_id <> poste_destino_id)
 );
 
 CREATE INDEX idx_subestacao_projeto
