@@ -18,6 +18,7 @@ import java.time.OffsetDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
+@Builder
 public class Poste {
 
     @Id
@@ -42,6 +43,7 @@ public class Poste {
 
     @Column(name = "updated_at", nullable = false)
     private OffsetDateTime updatedAt;
+
 
     @PrePersist
     protected void onCreate() {
