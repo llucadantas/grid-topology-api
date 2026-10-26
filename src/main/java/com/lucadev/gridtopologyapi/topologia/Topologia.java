@@ -1,4 +1,4 @@
-package com.lucadev.gridtopologyapi.contexto;
+package com.lucadev.gridtopologyapi.topologia;
 
 import com.lucadev.gridtopologyapi.alimentador.Alimentador;
 import com.lucadev.gridtopologyapi.poste.Poste;
@@ -17,7 +17,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ContextoRede {
+public class Topologia {
     private Projeto projeto;
     private Integer qntdPoste;
 

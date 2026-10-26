@@ -1,7 +1,10 @@
-package com.lucadev.gridtopologyapi.contexto.service;
+package com.lucadev.gridtopologyapi.topologia;
 
-import com.lucadev.gridtopologyapi.contexto.ContextoRede;
+import com.lucadev.gridtopologyapi.alimentador.Alimentador;
+import com.lucadev.gridtopologyapi.alimentador.AlimentadorRepository;
 import com.lucadev.gridtopologyapi.poste.PosteRepository;
+import com.lucadev.gridtopologyapi.subestacao.Subestacao;
+import com.lucadev.gridtopologyapi.subestacao.SubestacaoRepository;
 import com.lucadev.gridtopologyapi.transformador.TransformadorRepository;
 import com.lucadev.gridtopologyapi.trechobt.TrechoBTRepository;
 import com.lucadev.gridtopologyapi.trechomt.TrechoMTRepository;
@@ -11,16 +14,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class PersistenciaContexto implements Persistencia {
+public class TopologiaPersistencia implements Persistencia {
 
     private final PosteRepository posteRepository;
     private final TrechoMTRepository trechoMTRepository;
     private final TransformadorRepository transformadorRepository;
     private final TrechoBTRepository trechoBTRepository;
+    private final AlimentadorRepository alimentadorRepository;
+    private final SubestacaoRepository subestacaoRepository;
 
     @Transactional
     @Override
-    public void salvarContexto(ContextoRede contexto) {
+    public void salvarContexto(Topologia contexto) {
 
         // 1. Salva todos os postes de uma vez só (Bulk Insert)
         posteRepository.saveAll(contexto.getPostes());
@@ -34,12 +39,11 @@ public class PersistenciaContexto implements Persistencia {
         // 4. Salva os trechos de Baixa Tensão
         trechoBTRepository.saveAll(contexto.getTrechosBT());
 
-        // Nota: Assumindo que a Subestação e o Alimentador já foram
-        // salvos antes ou estão sendo salvos em cascata.
+
     }
 
     @Override
-    public ContextoRede instanciarContexto(Long idProjeto, Long idSubestacao, Long idAlimentador) {
+    public Topologia instanciarContexto(Long idProjeto, Long idSubestacao, Long idAlimentador) {
         return null;
     }
 }

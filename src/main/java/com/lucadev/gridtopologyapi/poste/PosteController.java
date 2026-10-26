@@ -20,6 +20,7 @@ public class PosteController {
 
     @GetMapping
     @RequestMapping("{idProjeto}")
+    @ResponseStatus(HttpStatus.OK)
     public List<Poste> findAll(@PathVariable Long idProjeto){
         return posteService.findAll(idProjeto);
     }

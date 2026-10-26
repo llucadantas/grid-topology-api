@@ -41,22 +41,21 @@ CREATE TABLE poste (
 );
 
 CREATE TABLE transformador (
-    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    poste_id BIGINT NOT NULL
-        REFERENCES poste(id) ON DELETE RESTRICT,
-
+   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+   poste_id BIGINT NOT NULL
+       REFERENCES poste(id) ON DELETE RESTRICT
 );
 
 CREATE TABLE trecho_mt (
-    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    alimentador_id BIGINT NOT NULL
-        REFERENCES alimentador(id) ON DELETE RESTRICT,
-    poste_origem_id BIGINT NOT NULL
-        REFERENCES poste(id) ON DELETE RESTRICT,
-    poste_destino_id BIGINT NOT NULL
-        REFERENCES poste(id) ON DELETE RESTRICT,
+id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+alimentador_id BIGINT NOT NULL
+   REFERENCES alimentador(id) ON DELETE RESTRICT,
+poste_origem_id BIGINT NOT NULL
+   REFERENCES poste(id) ON DELETE RESTRICT,
+poste_destino_id BIGINT NOT NULL
+   REFERENCES poste(id) ON DELETE RESTRICT,
 
-    CHECK (poste_origem_id <> poste_destino_id)''
+CHECK (poste_origem_id <> poste_destino_id)
 );
 
 CREATE TABLE trecho_bt (

@@ -9,8 +9,6 @@ import java.util.Optional;
 @Repository
 public interface TrechoMTRepository extends JpaRepository<TrechoMT, Long> {
 
-    Optional<TrechoMT> findByCodigo(String codigo);
-
     List<TrechoMT> findByAlimentadorId(Long alimentadorId);
 
     List<TrechoMT> findByPosteOrigemIdOrPosteDestinoId(Long posteOrigemId, Long posteDestinoId);

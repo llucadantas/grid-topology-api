@@ -1,8 +1,9 @@
-package com.lucadev.gridtopologyapi.contexto.strategy;
+package com.lucadev.gridtopologyapi.topologia.strategy;
 
-import com.lucadev.gridtopologyapi.contexto.ContextoRede;
+import com.lucadev.gridtopologyapi.topologia.Topologia;
 import com.lucadev.gridtopologyapi.poste.Poste;
 import com.lucadev.gridtopologyapi.trechomt.TrechoMT;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -10,9 +11,10 @@ import java.util.List;
 import java.util.Random;
 
 @Component
+@Order(2)
 public class GerarRedeMT implements GerarRede {
     @Override
-    public void gerarContexto(ContextoRede rede) {
+    public void gerarContexto(Topologia rede) {
         int x = 30;
         int y = 50;
         Random random = new Random();

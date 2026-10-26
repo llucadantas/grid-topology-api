@@ -9,7 +9,7 @@ import java.util.Optional;
 @Repository
 public interface TransformadorRepository extends JpaRepository<Transformador, Long> {
 
-    Optional<Transformador> findByCodigo(String codigo);
+
 
     List<Transformador> findByPosteId(Long posteId);
 }

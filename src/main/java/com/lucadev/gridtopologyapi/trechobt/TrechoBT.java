@@ -25,15 +25,15 @@ public class TrechoBT {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade =  CascadeType.PERSIST)
     @JoinColumn(name = "transformador_id", nullable = false)
     private Transformador transformador;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false,  cascade =  CascadeType.PERSIST)
     @JoinColumn(name = "poste_origem_id", nullable = false)
     private Poste posteOrigem;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false,   cascade =  CascadeType.PERSIST)
     @JoinColumn(name = "poste_destino_id", nullable = false)
     private Poste posteDestino;
 }

@@ -9,7 +9,6 @@ import java.util.Optional;
 @Repository
 public interface TrechoBTRepository extends JpaRepository<TrechoBT, Long> {
 
-    Optional<TrechoBT> findByCodigo(String codigo);
 
     List<TrechoBT> findByTransformadorId(Long transformadorId);
 

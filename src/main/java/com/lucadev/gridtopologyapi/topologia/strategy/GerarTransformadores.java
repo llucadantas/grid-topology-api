@@ -1,8 +1,9 @@
-package com.lucadev.gridtopologyapi.contexto.strategy;
+package com.lucadev.gridtopologyapi.topologia.strategy;
 
-import com.lucadev.gridtopologyapi.contexto.ContextoRede;
+import com.lucadev.gridtopologyapi.topologia.Topologia;
 import com.lucadev.gridtopologyapi.poste.Poste;
 import com.lucadev.gridtopologyapi.transformador.Transformador;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -10,10 +11,11 @@ import java.util.Collections;
 import java.util.List;
 
 @Component
+@Order(3)
 public class GerarTransformadores implements GerarRede {
 
     @Override
-    public void gerarContexto(ContextoRede rede) {
+    public void gerarContexto(Topologia rede) {
         // Quantidade de transformadores (10% do total de postes do projeto)
         int qntdTransformadores = (int) (rede.getPostes().size() * 0.1);
 
