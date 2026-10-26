@@ -25,9 +25,6 @@ public class TrechoMT {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "codigo", nullable = false, unique = true, length = 40)
-    private String codigo;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "alimentador_id", nullable = false)
     private Alimentador alimentador;

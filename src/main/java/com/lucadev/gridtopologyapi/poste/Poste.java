@@ -26,15 +26,6 @@ public class Poste {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "altura_m", precision = 6, scale = 2)
-    private BigDecimal alturaM;
-
-    @Column(name = "material", length = 30)
-    private String material;
-
-    @Column(name = "status", nullable = false, length = 20)
-    private String status = "ATIVO";
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "projeto_id", nullable = false)
     private Projeto projeto;
@@ -54,9 +45,6 @@ public class Poste {
         }
         if (this.updatedAt == null) {
             this.updatedAt = now;
-        }
-        if (this.status == null) {
-            this.status = "ATIVO";
         }
     }
 

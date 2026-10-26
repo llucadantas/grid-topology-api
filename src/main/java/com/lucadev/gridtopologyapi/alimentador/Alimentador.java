@@ -33,7 +33,4 @@ public class Alimentador {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "subestacao_id", nullable = false)
     private Subestacao subestacao;
-
-    @Column(name = "tensao_nominal_kv", precision = 8, scale = 3)
-    private BigDecimal tensaoNominalKv;
 }
