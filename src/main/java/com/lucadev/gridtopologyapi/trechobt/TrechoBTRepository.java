@@ -9,6 +9,7 @@ import java.util.Optional;
 @Repository
 public interface TrechoBTRepository extends JpaRepository<TrechoBT, Long> {
 
+    List<TrechoBT> findAllByPosteDestino_Projeto_Id(Long id);
 
     List<TrechoBT> findByTransformadorId(Long transformadorId);
 

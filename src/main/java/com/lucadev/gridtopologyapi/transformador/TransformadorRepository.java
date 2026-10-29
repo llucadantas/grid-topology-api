@@ -9,7 +9,6 @@ import java.util.Optional;
 @Repository
 public interface TransformadorRepository extends JpaRepository<Transformador, Long> {
 
-
-
+    List<Transformador> findAllByPoste_Projeto_Id(Long id);
     List<Transformador> findByPosteId(Long posteId);
 }

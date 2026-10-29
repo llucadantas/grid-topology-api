@@ -10,10 +10,12 @@ import org.springframework.stereotype.Component;
 public class GerarPostes implements GerarRede {
     @Override
     public void gerarContexto(Topologia rede) {
-        for(int i = 0; i<=rede.getQntdPoste(); i++){
-            Poste poste = new Poste();
-            poste.setProjeto(rede.getProjeto());
-            rede.getPostes().add(poste);
+        if(rede.getQntdPoste() == 0 || rede.getQntdPoste() == rede.getPostes().size()) {
+            return;
         }
+        Poste poste = new Poste();
+        poste.setProjeto(rede.getProjeto());
+        rede.getPostes().add(poste);
+        gerarContexto(rede);
     }
 }

@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Topologia da Rede Elétrica</title>
+
+    <!-- Importando o Cytoscape.js direto da nuvem (CDN) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.28.1/cytoscape.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: sans-serif;
+            background-color: #1e1e1e; /* Fundo escuro estilo radar/dashboard */
+        }
+        #cy {
+            width: 100vw;
+            height: 100vh;
+            display: block;
+        }
+        #legenda {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Caixa flutuante de legenda -->
+<div id="legenda">
+    <h3 style="margin-top: 0;">Legenda da Rede</h3>
+    <p>🔺 <b>Transformador:</b> Laranja</p>
+    <p>🔵 <b>Poste Comum:</b> Azul Claro</p>
+    <p><hr style="border: 2px solid #ff5252;"> <b>Cabo Média Tensão (MT)</b></p>
+    <p><hr style="border: 2px solid #4fc3f7;"> <b>Cabo Baixa Tensão (BT)</b></p>
+    <small><i>Role o mouse para Zoom. Clique e arraste os postes!</i></small>
+</div>
+
+<!-- Onde o grafo vai nascer -->
+<div id="cy"></div>
+
+<script>
+    // ==========================================
+    // 1. COLE O SEU JSON PERFEITO AQUI DENTRO
+    // ==========================================
+    const dadosDaApi = {
+        "edges": [
+            {
+                "id": "MT-1",
+                "source": "P-1",
+                "target": "P-15",
+                "type": "MEDIA_TENSAO"
+            },
+            {
+                "id": "MT-2",
+                "source": "P-15",
+                "target": "P-17",
+                "type": "MEDIA_TENSAO"
+            },
+            {
+                "id": "MT-3",
+                "source": "P-17",
+                "target": "P-45",
+                "type": "MEDIA_TENSAO"
+            },
+            {
+                "id": "MT-4",
+                "source": "P-17",
+                "target": "P-23",
+                "type": "MEDIA_TENSAO"
+            },
+            {
+                "id": "MT-5",
+                "source": "P-17",
+                "target": "P-41",
+                "type": "MEDIA_TENSAO"
+            },
+            {
+                "id": "MT-6",
+                "source": "P-45",
+                "target": "P-31",
+                "type": "MEDIA_TENSAO"
+            },
+            {
+                "id": "MT-7",
+                "source": "P-1",
+                "target": "P-48",
+                "type": "MEDIA_TENSAO"
+            },
+            {
+                "id": "MT-8",
+                "source": "P-15",
+                "target": "P-35",
+                "type": "MEDIA_TENSAO"
+            },
+            {
+                "id": "MT-9",
+                "source": "P-31",
+                "target": "P-36",
+                "type": "MEDIA_TENSAO"
+            },
+            {
+                "id": "MT-10",
+                "source": "P-41",
+                "target": "P-14",
+                "type": "MEDIA_TENSAO"
+            },
+            {
+                "id": "MT-11",
+                "source": "P-48",
+                "target": "P-43",
+                "type": "MEDIA_TENSAO"
+            },
+            {
+                "id": "MT-12",
+                "source": "P-14",
+                "target": "P-2",
+                "type": "MEDIA_TENSAO"
+            },
+            {
+                "id": "MT-13",
+                "source": "P-36",
+                "target": "P-40",
+                "type": "MEDIA_TENSAO"
+            },
+            {
+                "id": "MT-14",
+                "source": "P-2",
+                "target": "P-12",
+                "type": "MEDIA_TENSAO"
+            },
+            {
+                "id": "MT-15",
+                "source": "P-14",
+                "target": "P-26",
+                "type": "MEDIA_TENSAO"
+            },
+            {
+                "id": "MT-16",
+                "source": "P-14",
+                "target": "P-34",
+                "type": "MEDIA_TENSAO"
+            },
+            {
+                "id": "MT-17",
+                "source": "P-23",
+                "target": "P-27",
+                "type": "MEDIA_TENSAO"
+            },
+            {
+                "id": "MT-18",
+                "source": "P-31",
+                "target": "P-21",
+                "type": "MEDIA_TENSAO"
+            },
+            {
+                "id": "MT-19",
+                "source": "P-48",
+                "target": "P-29",
+                "type": "MEDIA_TENSAO"
+            },
+            {
+                "id": "MT-20",
+                "source": "P-15",
+                "target": "P-6",
+                "type": "MEDIA_TENSAO"
+            },
+            {
+                "id": "MT-21",
+                "source": "P-41",
+                "target": "P-10",
+                "type": "MEDIA_TENSAO"
+            }
+        ],
+        "nodes": [
+            {
+                "group": "TRANSFORMADOR",
+                "id": "P-1",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-2",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-3",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-4",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-5",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-6",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-7",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-8",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-9",
+                "label": null
+            },
+            {
+                "group": "TRANSFORMADOR",
+                "id": "P-10",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-11",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-12",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-13",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-14",
+                "label": null
+            },
+            {
+                "group": "TRANSFORMADOR",
+                "id": "P-15",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-16",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-17",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-18",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-19",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-20",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-21",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-22",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-23",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-24",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-25",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-26",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-27",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-28",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-29",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-30",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-31",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-32",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-33",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-34",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-35",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-36",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-37",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-38",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-39",
+                "label": null
+            },
+            {
+                "group": "TRANSFORMADOR",
+                "id": "P-40",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-41",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-42",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-43",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-44",
+                "label": null
+            },
+            {
+                "group": "TRANSFORMADOR",
+                "id": "P-45",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-46",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-47",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-48",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-49",
+                "label": null
+            },
+            {
+                "group": "POSTE_COMUM",
+                "id": "P-50",
+                "label": null
+            }
+        ]
+    };
+
+    // ==========================================
+    // 2. ADAPTADOR: Transforma o seu DTO no formato exato do Cytoscape
+    // ==========================================
+    const elementosParaRenderizar = [];
+
+    // Adiciona os Nós (Postes)
+    dadosDaApi.nodes.forEach(node => {
+        elementosParaRenderizar.push({
+            data: {
+                id: node.id,
+                group: node.group,
+                label: node.id
+            }
+        });
+    });
+
+    // Adiciona as Arestas (Cabos)
+    dadosDaApi.edges.forEach(edge => {
+        elementosParaRenderizar.push({
+            data: {
+                id: edge.id.trim(), // trim() para limpar o "M  T-1" que vimos antes
+                source: edge.source,
+                target: edge.target,
+                type: edge.type
+            }
+        });
+    });
+
+    // ==========================================
+    // 3. INICIALIZA E DESENHA O GRAFO
+    // ==========================================
+    const cy = cytoscape({
+        container: document.getElementById('cy'),
+        elements: elementosParaRenderizar,
+
+        // Configuração visual (Cores, formatos e espessuras)
+        style: [
+            {
+                selector: 'node',
+                style: {
+                    'label': 'data(label)',
+                    'color': '#fff',
+                    'text-valign': 'top',
+                    'text-margin-y': -5,
+                    'font-size': '10px'
+                }
+            },
+            {
+                selector: 'node[group="TRANSFORMADOR"]',
+                style: {
+                    'shape': 'triangle',
+                    'background-color': '#ff9800', // Laranja
+                    'width': 35,
+                    'height': 35
+                }
+            },
+            {
+                selector: 'node[group="POSTE_COMUM"]',
+                style: {
+                    'shape': 'ellipse',
+                    'background-color': '#4fc3f7', // Azul clarinho
+                    'width': 20,
+                    'height': 20
+                }
+            },
+            {
+                selector: 'edge',
+                style: {
+                    'curve-style': 'bezier',
+                    'target-arrow-shape': 'triangle', // Setinha mostrando a direção da energia
+                }
+            },
+            {
+                selector: 'edge[type="MEDIA_TENSAO"]',
+                style: {
+                    'width': 4,
+                    'line-color': '#ff5252', // Vermelho
+                    'target-arrow-color': '#ff5252',
+                    'z-index': 10 // Põe os cabos de MT por cima dos de BT
+                }
+            },
+            {
+                selector: 'edge[type="BAIXA_TENSAO"]',
+                style: {
+                    'width': 2,
+                    'line-color': '#81d4fa', // Azul
+                    'target-arrow-color': '#81d4fa'
+                }
+            }
+        ],
+
+        // Motor de física que espalha os postes de forma orgânica
+        layout: {
+            name: 'cose',
+            nodeRepulsion: 400000,
+            idealEdgeLength: 50,
+            nodeOverlap: 20
+        }
+    });
+</script>
+</body>
+</html>
